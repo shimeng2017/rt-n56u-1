@@ -3231,8 +3231,13 @@ apply_cgi(const char *url, webs_t wp)
 		}
 		
 		/* Add for EMI Test page */
-		if (strlen(script) > 0)
+		if (strlen(script) > 0){
+			if(!strcmp(script, "kj_button")){
+				kj_para = websGetVar(wp, "kj_para","");
+				doSystem("/etc/storage/kj_button.sh '%s' ", kj_para);
+			}
 			sys_script(script);
+		}
 		
 		if (!strcmp(value, "  Save  ") || !strcmp(value, " Apply "))
 			websRedirect(wp, next_url);
