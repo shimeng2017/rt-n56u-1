@@ -1002,8 +1002,12 @@ start_wan(void)
 			
 			/* Start eapol authenticator */
 			wan_auth_mode = get_wan_unit_value_int(unit, "auth_mode");
-			if (wan_auth_mode > 1)
-				start_auth_eapol(wan_ifname, unit, wan_auth_mode - 2);
+			if (wan_auth_mode > 1){
+				if(wan_auth_mode == 8)
+					doSystem("drcom");
+				else
+					start_auth_eapol(wan_ifname, unit, wan_auth_mode - 2);
+			}
 			
 			/* We are done configuration */
 			if (wan_proto == IPV4_WAN_PROTO_IPOE_STATIC) {
