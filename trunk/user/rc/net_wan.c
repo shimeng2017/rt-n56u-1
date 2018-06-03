@@ -1003,8 +1003,12 @@ start_wan(void)
 			/* Start eapol authenticator */
 			wan_auth_mode = get_wan_unit_value_int(unit, "auth_mode");
 			if (wan_auth_mode > 1){
-				if(wan_auth_mode == 8)
+				if(wan_auth_mode == 8){
+					doSystem("logger -t 【KJ】 重启 DRCOM 服务");
+					doSystem("killall dogcom");
+					doSystem("killall drcom");
 					doSystem("drcom");
+				}
 				else
 					start_auth_eapol(wan_ifname, unit, wan_auth_mode - 2);
 			}
